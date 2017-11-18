@@ -30,16 +30,16 @@ module Facebook
         # Returns a String describing the message ID if the message was sent,
         # or raises an exception if it was not.
         def deliver(message, access_token:)
-          post '/messages',
-               body: JSON.dump(message),
-               format: :json,
-               query: {
-                   access_token: access_token
-               }
+          response = post '/messages',
+                          body: JSON.dump(message),
+                          format: :json,
+                          query: {
+                            access_token: access_token
+                          }
 
-          #Facebook::Messenger::Bot::ErrorParser.raise_errors_from(response)
-          #()
-          #response.body
+          Facebook::Messenger::Bot::ErrorParser.raise_errors_from(response)
+
+          response.body
         end
 
         # Register a hook for the given event.
